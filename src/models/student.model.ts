@@ -1,4 +1,4 @@
-import {Entity, hasMany, model, property, belongsTo} from '@loopback/repository';
+import {Entity, model, property, hasMany, hasOne} from '@loopback/repository';
 import {Enroll} from './enroll.model';
 import {User} from './user.model';
 
@@ -53,13 +53,11 @@ export class Student extends Entity {
   })
   career: string;
 
-
-
   @hasMany(() => Enroll)
   enrolls: Enroll[];
 
-  @belongsTo(() => User)
-  userId: string;
+  @hasOne(() => User)
+  user: User;
 
   constructor(data?: Partial<Student>) {
     super(data);

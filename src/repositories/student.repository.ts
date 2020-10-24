@@ -1,4 +1,4 @@
-import {DefaultCrudRepository, repository, HasManyRepositoryFactory, BelongsToAccessor} from '@loopback/repository';
+import {DefaultCrudRepository, repository, HasManyRepositoryFactory, HasOneRepositoryFactory} from '@loopback/repository';
 import {Student, StudentRelations, Enroll, User} from '../models';
 import {MongodbDataSource} from '../datasources';
 import {inject, Getter} from '@loopback/core';
@@ -13,13 +13,13 @@ export class StudentRepository extends DefaultCrudRepository<
 
   public readonly enrolls: HasManyRepositoryFactory<Enroll, typeof Student.prototype.id>;
 
-  public readonly user: BelongsToAccessor<User, typeof Student.prototype.id>;
+  public readonly user: HasOneRepositoryFactory<User, typeof Student.prototype.id>;
 
   constructor(
     @inject('datasources.mongodb') dataSource: MongodbDataSource, @repository.getter('EnrollRepository') protected enrollRepositoryGetter: Getter<EnrollRepository>, @repository.getter('UserRepository') protected userRepositoryGetter: Getter<UserRepository>,
   ) {
     super(Student, dataSource);
-    this.user = this.createBelongsToAccessorFor('user', userRepositoryGetter,);
+    this.user = this.createHasOneRepositoryFactoryFor('user', userRepositoryGetter);
     this.registerInclusionResolver('user', this.user.inclusionResolver);
     this.enrolls = this.createHasManyRepositoryFactoryFor('enrolls', enrollRepositoryGetter,);
     this.registerInclusionResolver('enrolls', this.enrolls.inclusionResolver);
