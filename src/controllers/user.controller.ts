@@ -11,6 +11,10 @@ class Credentials {
   username: string;
   password: string;
 }
+class PasswordResetData {
+  username: string;
+  type: number;
+}
 
 export class UserController {
 
@@ -45,6 +49,42 @@ export class UserController {
     } else {
       throw new HttpErrors[401]("User or Password invalid.")
     }
+  }
+
+  @post('/password-reset', {
+    responses: {
+      '200': {
+        description: 'Login for useres'
+      }
+    }
+  })
+
+  async reset(
+    @requestBody() passwordResetData: PasswordResetData
+  ): Promise<boolean> {
+    let randomPassword = await this.authService.ResetPassword(passwordResetData.username);
+    if (randomPassword) {
+      //send sms with new password
+      //1 SMS
+      //2 Mail
+      switch (passwordResetData.type) {
+        case 1:
+          // send sms
+          console.log("Sending sms:" + randomPassword);
+          return true;
+          break;
+        case 2:
+          // send mail
+          console.log("Sending mail:" + randomPassword);
+          return true;
+          break;
+
+        default:
+          break;
+      }
+
+    }
+    throw new HttpErrors[400]("This notification type is not supported");
   }
 }
 
