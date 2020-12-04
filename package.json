@@ -52,6 +52,7 @@
     "@loopback/rest": "^7.0.1",
     "@loopback/rest-explorer": "^3.0.1",
     "@loopback/service-proxy": "^3.0.1",
+    "@sendgrid/mail": "^7.4.0",
     "@types/passport-http-bearer": "^1.0.36",
     "crypto-js": "^4.0.0",
     "generate-password": "^1.5.1",
@@ -60,7 +61,8 @@
     "passport": "^0.4.1",
     "passport-http": "^0.3.0",
     "passport-http-bearer": "^1.0.1",
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "twilio": "^3.53.0"
   },
   "devDependencies": {
     "@loopback/build": "^6.2.4",
