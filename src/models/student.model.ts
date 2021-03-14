@@ -52,6 +52,11 @@ export class Student extends Entity {
     required: true,
   })
   career: string;
+  @property({
+    type: 'string',
+    required: false,
+  })
+  profilePhoto: string;
 
   @hasMany(() => Enroll)
   enrolls: Enroll[];
